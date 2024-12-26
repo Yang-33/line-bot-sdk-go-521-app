@@ -2,13 +2,18 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"log"
 
 	gohttplib "github.com/Yang-33/line-bot-sdk-go-521-lib"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
+	logrus.SetFormatter(&logrus.TextFormatter{
+		DisableTimestamp: true, // disable adding timestamp for main_test.go
+	})
+	logrus.Info("Hello from logrus!")
+
 	// special
 	gohttplib.DumpAllDeps = true
 
@@ -20,7 +25,6 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	body, _ := io.ReadAll(resp.Body)
 	fmt.Println("Status:", resp.Status)
-	fmt.Println("Response Body:", string(body[:100]))
+	// fmt.Println("Response Body:", string(body[:100]))
 }
